@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="logo.png">
+    <title>Tính toán</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+            'slide-down': 'slideDown 0.3s ease-out',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: 0.6 },
+              '50%': { opacity: 1 }
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-10%)', opacity: 0 },
+              '100%': { transform: 'translateY(0)', opacity: 1 }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Alpine.js for mobile menu -->
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Mobile-Friendly Navbar -->
+    <nav x-data="{ isOpen: false }" class="relative rounded-xl border border-blue-500/20">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 backdrop-blur-md"></div>
+        
+        <!-- Floating Bubbles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute h-4 w-4 rounded-full bg-blue-400/10 animate-float top-4 left-[10%]"></div>
+            <div class="absolute h-3 w-3 rounded-full bg-blue-400/10 animate-float top-8 left-[20%] [animation-delay:0.5s]"></div>
+            <div class="absolute h-5 w-5 rounded-full bg-blue-400/10 animate-float top-6 left-[80%] [animation-delay:1s]"></div>
+            <div class="absolute h-6 w-6 rounded-full bg-blue-400/10 animate-float top-2 left-[60%] [animation-delay:1.5s]"></div>
+        </div>
+
+        <!-- Main Navbar Content -->
+        <div class="relative px-4 sm:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 group">
+                    <span class="text-xl sm:text-2xl font-bold text-white">SmartBites</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="index.html" class="relative group">
+                        <span class="text-blue-100 group-hover:text-white transition-colors duration-300">Trang chủ</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 delay-100"></div>
+                    </a>
+                    <a href="tinh-toan.html" class="relative group">
+                        <span class="text-blue-100 group-hover:text-white transition-colors duration-300">Tính toán</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 delay-100"></div>
+                    </a>
+                    <a href="tu-van.html" class="relative group">
+                        <span class="text-blue-100 group-hover:text-white transition-colors duration-300">Tư vấn</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 delay-100"></div>
+                    </a>
+                    <div x-data="{ open: false }" class="relative group">
+                        <button @click="open = !open" class="flex items-center text-blue-100 group-hover:text-white transition-colors duration-300">
+                          More
+                          <svg class="ml-1 w-4 h-4 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false"
+                             x-transition
+                             class="absolute top-full mt-2 w-40 bg-blue-900 border border-blue-500/20 rounded-lg shadow-lg z-50">
+                          <a href="tai-lieu-nghien-cuu.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Tài liệu nghiên cứu</a>
+                          <a href="bao-mat.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Chính sách bảo mật</a>
+                          <a href="dieu-khoan.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Điều khoản và dịch vụ chung</a>
+                        </div>
+                      </div>
+                      
+                </div>
+
+                <!-- Right Side Buttons -->
+                <div class="flex items-center space-x-4">
+                    <!-- CTA Button (Hidden on smallest screens) -->
+                    <a href="dang-ki.html" class="hidden sm:flex relative group">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
+                        <div class="relative px-5 sm:px-7 py-2 sm:py-3 bg-blue-950 rounded-lg leading-none flex items-center">
+                          <div class="flex items-center space-x-2">
+                            <span class="text-blue-200 group-hover:text-white transition duration-200">Đăng ký ngay</span>
+                            <svg class="w-5 h-5 text-blue-200 group-hover:text-white transform group-hover:translate-x-1 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </a>
+                      
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="isOpen = !isOpen" class="md:hidden relative group" aria-label="Toggle mobile menu">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
+                        <div class="relative p-2 bg-blue-950 rounded leading-none">
+                            <svg x-show="!isOpen" class="w-6 h-6 text-blue-200 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            <svg x-show="isOpen" class="w-6 h-6 text-blue-200 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div x-show="isOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="relative mt-4 md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 bg-blue-900/50 backdrop-blur-sm rounded-lg border border-blue-500/10">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:text-white hover:bg-blue-800/50 transition-all duration-200">Trang chủ</a>
+                    <a href="tinh-toan.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:text-white hover:bg-blue-800/50 transition-all duration-200">Tính toán</a>
+                    <a href="tu-van.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:text-white hover:bg-blue-800/50 transition-all duration-200">Tư vấn</a>
+                    <div x-data="{ open: false }" class="relative group">
+                        <button @click="open = !open" class="flex items-center text-blue-100 group-hover:text-white transition-colors duration-300">
+                          More
+                          <svg class="ml-1 w-4 h-4 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false"
+                             x-transition
+                             class="absolute top-full mt-2 w-40 bg-blue-900 border border-blue-500/20 rounded-lg shadow-lg z-50">
+                          <a href="tai-lieu-nghien-cuu.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Tài liệu nghiên cứu</a>
+                          <a href="bao-mat.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Chính sách bảo mật</a>
+                          <a href="dieu-khoan.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Điều khoản và dịch vụ chung</a>
+                        </div>
+                      </div>
+                    <!-- Mobile CTA Button -->
+                    <div class="px-3 py-2">
+                        <a href="dang-ki.html" class="hidden sm:flex relative group">
+                            <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
+                            <div class="relative px-5 sm:px-7 py-2 sm:py-3 bg-blue-950 rounded-lg leading-none flex items-center">
+                              <div class="flex items-center space-x-2">
+                                <span class="text-blue-200 group-hover:text-white transition duration-200">Đăng ký ngay</span>
+                                <svg class="w-5 h-5 text-blue-200 group-hover:text-white transform group-hover:translate-x-1 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                              </div>
+                            </div>
+                          </a>
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="max-w-5xl mx-auto space-y-10 mt-10">
+      <form id="nutrition-form" onsubmit="handleSubmit(event)" method="POST" action="" class="space-y-6">
+      <!-- Giới tính -->
+        <section class="bg-white p-6 rounded-2xl shadow-md space-y-4">
+          <h2 class="text-center font-bold text-gray-700 uppercase tracking-wide text-sm">Giới tính</h2>
+          <div class="flex flex-wrap justify-center gap-6">
+            <label class="relative flex h-14 w-14 items-center justify-center">
+              <input type="radio" name="gender" value="male" class="peer absolute inset-0 opacity-0 cursor-pointer z-10">
+              <div class="absolute h-full w-full rounded-full bg-blue-100 shadow ring-blue-400 duration-300 peer-checked:scale-110 peer-checked:ring-2"></div>
+              <div class="absolute -z-10 h-full w-full scale-0 rounded-full bg-blue-200 duration-500 peer-checked:scale-[500%]"></div>
+              <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="50px"
+          height="50px"
+          viewBox="0 0 24 24"
+          fill="none"
+          class="absolute stroke-blue-400"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M15.5631 16.1199C14.871 16.81 13.9885 17.2774 13.0288 17.462C12.0617 17.6492 11.0607 17.5459 10.1523 17.165C8.29113 16.3858 7.07347 14.5723 7.05656 12.5547C7.04683 11.0715 7.70821 9.66348 8.8559 8.72397C10.0036 7.78445 11.5145 7.4142 12.9666 7.71668C13.9237 7.9338 14.7953 8.42902 15.4718 9.14008C16.4206 10.0503 16.9696 11.2996 16.9985 12.6141C17.008 13.9276 16.491 15.1903 15.5631 16.1199Z"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+          <path
+            d="M14.9415 8.60977C14.6486 8.90266 14.6486 9.37754 14.9415 9.67043C15.2344 9.96332 15.7093 9.96332 16.0022 9.67043L14.9415 8.60977ZM18.9635 6.70907C19.2564 6.41617 19.2564 5.9413 18.9635 5.64841C18.6706 5.35551 18.1958 5.35551 17.9029 5.64841L18.9635 6.70907ZM16.0944 5.41461C15.6802 5.41211 15.3424 5.74586 15.3399 6.16007C15.3374 6.57428 15.6711 6.91208 16.0853 6.91458L16.0944 5.41461ZM18.4287 6.92872C18.8429 6.93122 19.1807 6.59747 19.1832 6.18326C19.1857 5.76906 18.8519 5.43125 18.4377 5.42875L18.4287 6.92872ZM19.1832 6.17421C19.1807 5.76001 18.8429 5.42625 18.4287 5.42875C18.0145 5.43125 17.6807 5.76906 17.6832 6.18326L19.1832 6.17421ZM17.6973 8.52662C17.6998 8.94082 18.0377 9.27458 18.4519 9.27208C18.8661 9.26958 19.1998 8.93177 19.1973 8.51756L17.6973 8.52662ZM16.0022 9.67043L18.9635 6.70907L17.9029 5.64841L14.9415 8.60977L16.0022 9.67043ZM16.0853 6.91458L18.4287 6.92872L18.4377 5.42875L16.0944 5.41461L16.0853 6.91458ZM17.6832 6.18326L17.6973 8.52662L19.1973 8.51756L19.1832 6.17421L17.6832 6.18326Z"
+          ></path>
+        </svg>
+            </label>
+    
+            <label class="relative flex h-14 w-14 items-center justify-center">
+              <input type="radio" name="gender" value="female" class="peer absolute inset-0 opacity-0 cursor-pointer z-10">
+              <div class="absolute h-full w-full rounded-full bg-pink-100 shadow ring-pink-400 duration-300 peer-checked:scale-110 peer-checked:ring-2"></div>
+              <div class="absolute -z-10 h-full w-full scale-0 rounded-full bg-pink-200 duration-500 peer-checked:scale-[500%]"></div>
+              <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="35px"
+          height="35px"
+          viewBox="0 0 24 24"
+          fill="none"
+          class="absolute fill-pink-400"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M20 9C20 13.0803 16.9453 16.4471 12.9981 16.9383C12.9994 16.9587 13 16.9793 13 17V19H14C14.5523 19 15 19.4477 15 20C15 20.5523 14.5523 21 14 21H13V22C13 22.5523 12.5523 23 12 23C11.4477 23 11 22.5523 11 22V21H10C9.44772 21 9 20.5523 9 20C9 19.4477 9.44772 19 10 19H11V17C11 16.9793 11.0006 16.9587 11.0019 16.9383C7.05466 16.4471 4 13.0803 4 9C4 4.58172 7.58172 1 12 1C16.4183 1 20 4.58172 20 9ZM6.00365 9C6.00365 12.3117 8.68831 14.9963 12 14.9963C15.3117 14.9963 17.9963 12.3117 17.9963 9C17.9963 5.68831 15.3117 3.00365 12 3.00365C8.68831 3.00365 6.00365 5.68831 6.00365 9Z"
+          ></path>
+        </svg>
+            </label>
+    
+            <label class="relative flex h-14 w-14 items-center justify-center">
+              <input type="radio" name="gender" value="non-binary" class="peer absolute inset-0 opacity-0 cursor-pointer z-10">
+              <div class="absolute h-full w-full rounded-full bg-purple-100 shadow ring-purple-400 duration-300 peer-checked:scale-110 peer-checked:ring-2"></div>
+              <div class="absolute -z-10 h-full w-full scale-0 rounded-full bg-purple-200 duration-500 peer-checked:scale-[500%]"></div>
+              <svg
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          width="40px"
+          height="40px"
+          viewBox="0 0 512 512"
+          version="1.1"
+          class="absolute fill-purple-400"
+        >
+          <g id="drop" transform="translate(42.666667, 70.248389)">
+            <path
+              d="M226.597,200.834611 L296.853333,271.084945 L353.819,271.084 L326.248389,243.503223 L356.418278,213.333333 L435.503223,292.418278 L356.418278,371.503223 L326.248389,341.333333 L353.82,313.751 L279.163435,313.751611 L196.418,231.011611 L226.597,200.834611 Z M356.418278,1.42108547e-14 L435.503223,79.0849447 L356.418278,158.169889 L326.248389,128 L353.82,100.418 L296.853333,100.418278 L83.503232,313.751611 L-1.0658141e-13,313.751611 L-1.03968831e-13,271.084945 L65.8133333,271.084945 L279.163435,57.7516113 L353.82,57.751 L326.248389,30.1698893 L356.418278,1.42108547e-14 Z M83.503232,57.7516113 L166.248,140.490611 L136.069,170.667611 L65.8133333,100.418278 L-1.0658141e-13,100.418278 L-1.0658141e-13,57.7516113 L83.503232,57.7516113 Z"
+            ></path>
+          </g>
+        </svg>
+            </label>
+    
+            <label class="relative flex h-14 w-14 items-center justify-center">
+              <input type="radio" name="gender" value="none" class="peer absolute inset-0 opacity-0 cursor-pointer z-10">
+              <div class="absolute h-full w-full rounded-full bg-neutral-100 shadow ring-neutral-400 duration-300 peer-checked:scale-110 peer-checked:ring-2"></div>
+              <div class="absolute -z-10 h-full w-full scale-0 rounded-full bg-neutral-200 duration-500 peer-checked:scale-[500%]"></div>
+              <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="50px"
+          height="50px"
+          viewBox="0 0 24 24"
+          fill="none"
+          class="absolute stroke-neutral-400"
+        >
+          <path
+            id="Vector"
+            d="M8.19531 8.76498C8.42304 8.06326 8.84053 7.43829 9.40137 6.95899C9.96221 6.47968 10.6444 6.16501 11.373 6.0494C12.1017 5.9338 12.8486 6.02202 13.5303 6.3042C14.2119 6.58637 14.8016 7.05166 15.2354 7.64844C15.6691 8.24521 15.9295 8.95008 15.9875 9.68554C16.0455 10.421 15.8985 11.1581 15.5636 11.8154C15.2287 12.4728 14.7192 13.0251 14.0901 13.4106C13.4611 13.7961 12.7377 14.0002 12 14.0002V14.9998M12.0498 19V19.1L11.9502 19.1002V19H12.0498Z"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+            </label>
+          </div>
+        </section>
+    
+        <!-- Họ và tên -->
+        <section class="bg-white p-6 rounded-2xl shadow-md space-y-2">
+          <label class="block text-sm font-semibold text-gray-700 uppercase" for="name">Họ và tên</label>
+          <input
+            type="text"
+            placeholder="Nhập họ và tên"
+            class="w-full px-4 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            id="name"
+          />
+        </section>
+    
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Tuổi -->
+          <div class="rounded-xl border bg-white shadow px-6 py-4 text-center">
+            <p class="font-semibold text-gray-700 uppercase">Tuổi</p>
+            <input
+              type="number"
+              id="ageValue"
+              min="0"
+              max="100"
+              class="text-blue-600 text-4xl font-bold text-center w-full outline-none"
+              oninput="syncSlider('ageSlider', 'ageValue')"
+            />
+            <input
+              type="range"
+              id="ageSlider"
+              min="0"
+              max="100"
+              class="w-full accent-blue-600 mt-4"
+              oninput="syncValue('ageSlider', 'ageValue')"
+            />
+          </div>
+        
+          <!-- Chiều cao -->
+          <div class="rounded-xl border bg-white shadow px-6 py-4 text-center">
+            <p class="font-semibold text-gray-700 uppercase">
+              Chiều cao <span class="text-gray-500 text-sm">(cm)</span>
+            </p>
+            <input
+              type="number"
+              id="heightValue"
+              min="0"
+              max="250"
+              class="text-blue-600 text-4xl font-bold text-center w-full outline-none"
+              oninput="syncSlider('heightSlider', 'heightValue')"
+            />
+            <input
+              type="range"
+              id="heightSlider"
+              min="0"
+              max="250"
+              class="w-full accent-blue-600 mt-4"
+              oninput="syncValue('heightSlider', 'heightValue')"
+            />
+          </div>
+        
+          <!-- Cân nặng -->
+          <div class="rounded-xl border bg-white shadow px-6 py-4 text-center">
+            <p class="font-semibold text-gray-700 uppercase">
+              Cân nặng <span class="text-gray-500 text-sm">(kg)</span>
+            </p>
+            <input
+              type="number"
+              id="weightValue"
+              min="0"
+              max="500"
+              class="text-blue-600 text-4xl font-bold text-center w-full outline-none"
+              oninput="syncSlider('weightSlider', 'weightValue')"
+            />
+            <input
+              type="range"
+              id="weightSlider"
+              min="0"
+              max="500"
+              class="w-full accent-blue-600 mt-4"
+              oninput="syncValue('weightSlider', 'weightValue')"
+            />
+          </div>
+        </section>
+        
+        <script>
+          function syncValue(sliderId, inputId) {
+            document.getElementById(inputId).value = document.getElementById(sliderId).value;
+          }
+        
+          function syncSlider(sliderId, inputId) {
+            document.getElementById(sliderId).value = document.getElementById(inputId).value;
+          }
+        </script>
+        
+    
+        <!-- Bệnh nền - Đề xuất - Món ăn mong muốn -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="space-y-2">
+            <label class="block font-semibold text-gray-700 uppercase text-sm" for="service">Bệnh nền</label>
+            <select class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-700" id="service">
+              <option value="Không">Không</option>
+              <option value="Phẫu thuật nhỏ">Phẫu thuật nhỏ</option>
+              <option value="Nhiễm trùng">Nhiễm trùng</option>
+              <option value="Gãy xương">Gãy xương</option>
+              <option value="Đa chấn thương">Đa chấn thương</option>
+              <option value="Nhiễm trùng huyết">Nhiễm trùng huyết</option>
+              <option value="Bỏng nặng">Bỏng nặng</option>
+              <option value="Sốt tăng thêm mỗi 1°C">Sốt tăng thêm mỗi 1°C</option>
+              <option value="Khó thở">Khó thở</option>
+              <option value="Co giật, lăn lộn">Co giật, lăn lộn</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <label class="block font-semibold text-gray-700 uppercase text-sm" for="message">Đề xuất</label>
+            <input type="text" class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-700" placeholder="Thêm thông tin" id="message">
+          </div>
+          <div class="space-y-2">
+            <label class="block font-semibold text-gray-700 uppercase text-sm" for="food-type">Món ăn mong muốn</label>
+            <select class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-700" id="food-type">
+              <option value="Nước">Món nước</option>
+              <option value="Khô">Món khô</option>
+              <option value="Khác">Món khác</option>
+            </select>
+          </div>
+        </section>
+        <!-- Nút gửi thông tin -->
+        <section class="text-center">
+          <button id="confirm-btn" type="button" class="mt-6 px-6 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 shadow-md transition-all duration-200">
+            Tính toán
+          </button>
+        </section>
+      </form>
+    </main>
+    <!--Suggest dish-->
+    <div id="suggest-dish" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-10 md:px-20"></div>
+<script>
+document.getElementById("confirm-btn").addEventListener("click", async function () {
+  const resultDiv = document.getElementById("suggest-dish");
+  const name = document.getElementById("name").value;
+  const genderInput = document.querySelector('input[name="gender"]:checked');
+  const gender = genderInput ? genderInput.value : "";
+  const age = parseInt(document.getElementById("ageValue").value) || 0;
+  const height = parseFloat(document.getElementById("heightValue").value) || 0;
+  const weight = parseFloat(document.getElementById("weightValue").value) || 0;
+  const illness = document.getElementById("service").value;
+  const foodType = document.getElementById("food-type").value;
+
+  if (!name || !gender || age <= 0 || height <= 0 || weight <= 0) {
+    alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+  }
+
+  let bmr = gender === "male"
+    ? 10 * weight + 6.25 * height - 5 * age + 5
+    : 10 * weight + 6.25 * height - 5 * age - 161;
+
+  const factors = {"Không":1.2,"Phẫu thuật nhỏ":1.3,"Nhiễm trùng":1.5,"Gãy xương":1.4,"Đa chấn thương":1.6,"Nhiễm trùng huyết":1.8,"Bỏng nặng":2.0};
+  const tdee = Math.round(bmr * (factors[illness] || 1.2));
+
+  resultDiv.innerHTML = `<div class='col-span-3 text-center text-xl font-bold text-green-700'>TDEE: ${tdee} kcal/ngày</div>`;
+
+  try {
+    const res = await fetch("http://localhost:3000/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tdee, foodType })
+    });
+    const data = await res.json();
+    if (!data.meals) return resultDiv.innerHTML += "<p>Không có thực đơn phù hợp.</p>";
+
+    Object.entries(data.meals).forEach(([meal, foods]) => {
+      const mealDiv = document.createElement("div");
+      mealDiv.className = "bg-white p-4 rounded-lg shadow";
+      mealDiv.innerHTML = `<h2 class='text-lg font-semibold text-blue-600'>Bữa ${meal}</h2>`;
+      foods.forEach(food => {
+        mealDiv.innerHTML += `
+          <div class="mt-2 p-3 bg-gray-50 border rounded">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold">${food.name}</span>
+              <span class="text-green-600 font-bold">${food.energy} kcal</span>
+            </div>
+            <div class="text-xs text-gray-600 mt-1">Khối lượng gợi ý: ${food.weight || 0}g</div>
+            <div class="mt-2 text-xs text-gray-600 flex flex-wrap gap-2">
+              <span>${food.protein}g Protein</span>
+              <span>${food.fat}g Fat</span>
+              <span>${food.carbs}g Carbs</span>
+              <span>${food.fiber}g Chất xơ</span>
+            </div>
+            ${food.ingredients && food.ingredients.length > 0 ? `<div class='mt-2 text-xs text-gray-500'>Nguyên liệu:<ul class='list-disc list-inside'>${food.ingredients.map(ing => `<li>${ing.name}: ${ing.amount}g</li>`).join('')}</ul></div>` : ''}
+          </div>`;
+      });
+      resultDiv.appendChild(mealDiv);
+    });
+  } catch (err) {
+    alert("Lỗi server hoặc kết nối!");
+  }
+});
+</script>
+  <!--Slider giới thiệu kiến thức dinh dưỡng-->
+<div class="text-xl font-bold m-5 text-center">Một số kiến thức dinh dưỡng cơ bản</div>
+
+<div class="gallery border-2 rounded mx-auto m-5 bg-white" style="width:750px;">
+  <div class="top flex p-2 border-b select-none">
+    <div class="heading text-gray-800 w-full pl-3 font-semibold my-auto"></div>
+    <div class="buttons ml-auto flex text-gray-600 mr-1">
+      <svg action="prev" class="w-7 border-2 rounded-l-lg p-1 cursor-pointer border-r-0"
+        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path action="prev" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <svg action="next" class="w-7 border-2 rounded-r-lg p-1 cursor-pointer" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path action="next" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+    </div>
+  </div>
+  <div class="content-area w-full h-96 overflow-hidden">
+    <div class="platform shadow-xl h-full flex">
+      <!-- frame start -->
+      <div class="each-frame border-box flex-none h-full" title="Tháp dinh dưỡng">
+        <!-- title shows in top -->
+        <!-- this is full editable area -->
+        <div class="main flex w-full p-8">
+          <div class="sub w-4/6 my-auto">
+            <img class="w-full p-8" src="thap.jpg" alt="">
+          </div>
+          <div class="sub w-full my-auto">
+            <div class="head text-3xl font-bold mb-4">Tháp dinh dưỡng</div>
+            <div class="long-text text-lg">Tháp dinh dưỡng là một biểu đồ hình kim tự tháp thể hiện lượng thực phẩm tiêu thụ cần thiết trong một ngày của các nhóm thực phẩm cơ bản để xây dựng một khẩu phần ăn uống phù hợp với nhu cầu dinh dưỡng của từng nhóm đối tượng.</div>
+          </div>
+        </div>
+      </div>
+      <!-- frame end -->
+
+      <div class="each-frame border-box flex-none h-full" title="13 loại vitamin cần thiết">
+        <!-- title shows in top -->
+        <!-- this is full editable area -->
+        <div class="main flex w-full p-8">
+          <div class="sub w-4/6 my-auto">
+            <img class="w-full p-8" src="https://files.benhvien108.vn/ecm/source_files/2022/09/13/220913-1-1-142009-130922-64.jpg" alt="">
+          </div>
+          <div class="sub w-full my-auto">
+            <div class="head text-3xl font-bold mb-4">Vitamin</div>
+            <div class="long-text text-lg">Các vitamin hòa tan trong chất béo được lưu trữ trong mô mỡ của chúng ta. Vì các vitamin tan trong chất béo được lưu trữ trong cơ thể, nên việc sử dụng quá liều các vitamin này có thể gây nguy hiểm. Đối với các vitamin tan trong nước, nếu dùng nhiều hơn mức cần thiết, chỉ đơn giản cơ thể sẽ đào thải qua đường nước tiểu. Đó là tin tốt vì thực tế có rất ít tác dụng phụ của việc dùng quá liều. </div>
+          </div>
+        </div>
+      </div>
+      <!-- frame end -->
+
+      <div class="each-frame border-box flex-none h-full" title="Dinh dưỡng">
+        <!-- title shows in top -->
+        <!-- this is full editable area -->
+        <div class="main flex w-full p-8">
+          <div class="sub w-4/6 my-auto">
+            <img class="w-full p-8" src="https://prod-cdn.pharmacity.io/blog/dinh-duong-hop-ly-1.jpg" alt="">
+          </div>
+          <div class="sub w-full my-auto">
+            <div class="head text-3xl font-bold mb-4">Vai trò của dinh dưỡng</div>
+            <div class="long-text text-lg">Dinh dưỡng đóng vai trò quan trọng trong việc duy trì sức khỏe và phòng ngừa bệnh tật. Một chế độ dinh dưỡng hợp lý giúp cơ thể phát triển toàn diện, cải thiện chức năng não bộ, tăng cường hệ miễn dịch và duy trì trọng lượng cơ thể lý tưởng. </div>
+          </div>
+        </div>
+      </div>
+      <!-- frame end -->
+
+      <div class="each-frame border-box flex-none h-full" title="Nước">
+        <!-- title shows in top -->
+        <!-- this is full editable area -->
+        <div class="main flex w-full p-8">
+          <div class="sub w-4/6 my-auto">
+            <img class="w-full p-8" src="https://www.geyser.com.vn/wp-content/uploads/2021/12/vai-tro-cua-nuoc-doi-voi-con-nguoi.jpg" alt="">
+          </div>
+          <div class="sub w-full my-auto">
+            <div class="head text-3xl font-bold mb-4">Vai trò của nước</div>
+            <div class="long-text text-lg">Nước sạch đóng vai trò vô cùng quan trọng trong cơ thể người, vì nước chiếm đến 70 – 80% trọng lượng cơ thể. Nước có khả năng cung cấp nguồn chất khoáng, vận chuyển chất dinh dưỡng cần thiết cho các tế bào, nuôi dưỡng tế bào trong mọi hoạt động trong cơ thể. Nước sạch mà hàng ngày chúng ta thường sử dụng có chứa rất nhiều các chất khoáng có lợi cho sức khỏe.</div>
+            <div
+              class="goto border border-gray-400 text-sm font-semibold inline-block mt-2 p-1 px-2 rounded cursor-pointer"
+              action="goto" goto="0">Goto First Frame</div>
+          </div>
+        </div>
+      </div>
+      <!-- frame end -->
+
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .platform {
+    position: relative;
+    transition: right 0.3s;
+  }
+
+  .body {
+    background-color: white !important;
+  }
+</style>
+
+<script>
+  function gallery(){
+              this.index=0;
+              this.load=function(){
+                this.rootEl = document.querySelector(".gallery");
+                this.platform = this.rootEl.querySelector(".platform");
+                this.frames = this.platform.querySelectorAll(".each-frame");
+                this.contentArea = this.rootEl.querySelector(".content-area");      
+                this.width = parseInt(this.rootEl.style.width);
+                this.limit = {start:0,end:this.frames.length-1};
+                this.frames.forEach(each=>{each.style.width=this.width+"px";});   
+                this.goto(this.index);      
+              }
+              this.set_title = function(){this.rootEl.querySelector(".heading").innerText=this.frames[this.index].getAttribute("title");}
+              this.next = function(){this.platform.style.right=this.width * ++this.index + "px";this.set_title();}
+              this.prev = function(){this.platform.style.right=this.width * --this.index + "px";this.set_title();}
+              this.goto = function(index){this.platform.style.right = this.width * index + "px";this.index=index;this.set_title();}
+              this.load();
+          }
+          var G = new gallery();
+            G.rootEl.addEventListener("click",function(t){
+                var val = t.target.getAttribute("action");
+                if(val == "next" && G.index != G.limit.end){G.next();}
+                if(val == "prev" && G.index != G.limit.start){G.prev();}
+                if(val == "goto"){
+                    let rv = t.target.getAttribute("goto");
+                    rv = rv == "end" ? G.limit.end:rv;
+                    G.goto(parseInt(rv));
+                }
+            });
+            document.addEventListener("keyup",function(t){
+                var val = t.keyCode;
+                if(val == 39 && G.index != G.limit.end){G.next();}
+                if(val == 37 && G.index != G.limit.start){G.prev();}
+            });
+
+            // run G.load() if new data loaded with ajax
+
+</script>
+  </div>
+  <!--Footer-->
+  <footer class="bg-white shadow-lg mt-auto">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Giới thiệu dự án -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">SmartBites</h3>
+            <p class="text-gray-500 mt-3">Sức khỏe & Dinh dưỡng của người dùng là trách nhiệm hàng đầu của chúng tôi.</p>
+            <p class="text-gray-500 mt-2">© 2024 All rights reserved.</p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">Phím tắt</h3>
+            <ul class="mt-3 space-y-2">
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Trang chủ</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Cửa hàng</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Về chúng tôi</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Liên hệ</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Customer Service -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">CSKH</h3>
+            <ul class="mt-3 space-y-2">
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">FAQs</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Mua sắm</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Chính sách bảo mật</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Điều khoản & Dịch vụ chung</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Newsletter Subscription -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">Cập nhật</h3>
+            <p class="text-gray-500 mt-3">Đăng ký email của bạn để cập nhật thông tin sớm nhất về dinh dưỡng từ chúng tôi.</p>
+            <div class="mt-4 flex">
+                <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-1">
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-r-lg transition">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+</body>
+</html>

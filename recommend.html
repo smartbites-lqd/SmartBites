@@ -1,0 +1,129 @@
+<!-- <!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống gợi ý món ăn</title>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("confirm-btn").addEventListener("click", function () {
+                // Lấy dữ liệu từ form
+                const name = document.getElementById("name").value;
+                const gender = document.getElementById("gender").value;
+                const age = parseInt(document.getElementById("age").value) || 0;
+                const height = parseFloat(document.getElementById("height").value) || 0;
+                const weight = parseFloat(document.getElementById("weight").value) || 0;
+
+                if (!name || !gender || age <= 0 || height <= 0 || weight <= 0) {
+                    alert("Vui lòng nhập đầy đủ thông tin hợp lệ!");
+                    return;
+                }
+
+                // Hiển thị danh sách món ăn
+                const resultDiv = document.getElementById("suggest-dish");
+                resultDiv.innerHTML = "<h3>Món ăn gợi ý:</h3>";
+
+                sampleFoods.forEach(food => {
+                    resultDiv.innerHTML += `
+                        <div class='bg-white rounded-xl shadow-md overflow-hidden p-4' style='border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;'>
+                            <div class='text-lg font-medium text-gray-800 mb-2'><b>${food.name}</b></div>
+                            <p><b>Thành phần:</b> ${food.ingredients}</p>
+                            <p>Năng lượng: ${food.energy} kcal</p>
+                            <p>Protein: ${food.protein}g - Fat: ${food.fat}g - Carbs: ${food.carbs}g - Fiber: ${food.fiber}g</p>
+                        </div>`;
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Hệ thống gợi ý món ăn</h2>
+    <label for="name">Tên:</label>
+    <input type="text" id="name" required><br>
+
+    <label for="gender">Giới tính:</label>
+    <select id="gender">
+        <option value="Nam">Nam</option>
+        <option value="Nữ">Nữ</option>
+    </select><br>
+
+    <label for="age">Tuổi:</label>
+    <input type="number" id="age" required><br>
+
+    <label for="height">Chiều cao (cm):</label>
+    <input type="number" id="height" required><br>
+
+    <label for="weight">Cân nặng (kg):</label>
+    <input type="number" id="weight" required><br>
+
+    <button id="confirm-btn">Xác nhận</button>
+
+    <div id="suggest-dish"></div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hệ thống gợi ý món ăn</title>
+  <script defer>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("confirm-btn").addEventListener("click", async function () {
+        const tdee = parseInt(document.getElementById("tdee").value) || 0;
+        const foodType = document.getElementById("foodType").value;
+
+        if (tdee <= 0) {
+          alert("TDEE không hợp lệ hoặc chưa được tính.");
+          return;
+        }
+
+        try {
+          const response = await fetch("http://localhost:3000/recommend", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tdee, foodType })
+          });
+
+          const data = await response.json();
+          const resultDiv = document.getElementById("suggest-dish");
+          resultDiv.innerHTML = "<h3>Món ăn gợi ý:</h3>";
+
+          if (data.recommendations && data.recommendations.length > 0) {
+            data.recommendations.forEach(food => {
+              resultDiv.innerHTML += `
+                <div class='bg-white rounded-xl shadow-md overflow-hidden p-4' style='border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;'>
+                  <div class='text-lg font-medium text-gray-800 mb-2'><b>${food.name}</b></div>
+                  <p>Năng lượng: ${food.energy} kcal</p>
+                  <p>Protein: ${food.protein}g - Fat: ${food.fat}g - Carbs: ${food.carbs}g - Fiber: ${food.fiber}g</p>
+                </div>`;
+            });
+          } else {
+            resultDiv.innerHTML += "<p>Không tìm thấy món ăn phù hợp!</p>";
+          }
+        } catch (error) {
+          console.error("Lỗi khi gọi server:", error);
+          alert("Không thể kết nối đến server.");
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <h2>Gợi ý món ăn từ TDEE đã tính</h2>
+
+  <label for="tdee">TDEE đã tính (kcal/ngày):</label>
+  <input type="number" id="tdee" required><br>
+
+  <label for="foodType">Loại món ăn mong muốn:</label>
+  <select id="foodType">
+    <option value="Khô">Món khô</option>
+    <option value="Nước">Món nước</option>
+    <option value="Khác">Khác</option>
+  </select><br><br>
+
+  <button id="confirm-btn">Xác nhận</button>
+
+  <div id="suggest-dish"></div>
+</body>
+</html>

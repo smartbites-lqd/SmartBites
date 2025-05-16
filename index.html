@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Trang chủ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'float': 'float 3s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+            'slide-down': 'slideDown 0.3s ease-out',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: 0.6 },
+              '50%': { opacity: 1 }
+            },
+            slideDown: {
+              '0%': { transform: 'translateY(-10%)', opacity: 0 },
+              '100%': { transform: 'translateY(0)', opacity: 1 }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+  .flip-card {
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+
+  .flip-card.flipped {
+    transform: rotateY(180deg);
+  }
+</style>
+  <!-- Alpine.js for mobile menu -->
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body class="bg-white-100">
+    <!-- Mobile-Friendly Navbar -->
+    <nav x-data="{ isOpen: false }" class="relative rounded-xl border border-blue-500/20">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 backdrop-blur-md"></div>
+        
+        <!-- Floating Bubbles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute h-4 w-4 rounded-full bg-blue-400/10 animate-float top-4 left-[10%]"></div>
+            <div class="absolute h-3 w-3 rounded-full bg-blue-400/10 animate-float top-8 left-[20%] [animation-delay:0.5s]"></div>
+            <div class="absolute h-5 w-5 rounded-full bg-blue-400/10 animate-float top-6 left-[80%] [animation-delay:1s]"></div>
+            <div class="absolute h-6 w-6 rounded-full bg-blue-400/10 animate-float top-2 left-[60%] [animation-delay:1.5s]"></div>
+        </div>
+
+        <!-- Main Navbar Content -->
+        <div class="relative px-4 sm:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 group">
+                    <span class="text-xl sm:text-2xl font-bold text-white">SmartBites</span>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="index.html" class="relative group">
+                        <span class="text-blue-100 group-hover:text-white transition-colors duration-300">Trang chủ</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 delay-100"></div>
+                    </a>
+                    <a href="tinh-toan.html" class="relative group">
+                        <span class="text-blue-100 group-hover:text-white transition-colors duration-300">Tính toán</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 delay-100"></div>
+                    </a>
+                    <a href="tu-van.html" class="relative group">
+                        <span class="text-blue-100 group-hover:text-white transition-colors duration-300">Tư vấn</span>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 group-hover:w-full transition-all duration-300"></div>
+                        <div class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white/20 group-hover:w-full transition-all duration-500 delay-100"></div>
+                    </a>
+                    <div x-data="{ open: false }" class="relative group">
+                        <button @click="open = !open" class="flex items-center text-blue-100 group-hover:text-white transition-colors duration-300">
+                          More
+                          <svg class="ml-1 w-4 h-4 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false"
+                             x-transition
+                             class="absolute top-full mt-2 w-40 bg-blue-900 border border-blue-500/20 rounded-lg shadow-lg z-50">
+                          <a href="tai-lieu-nghien-cuu.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Tài liệu nghiên cứu</a>
+                          <a href="bao-mat.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Chính sách bảo mật</a>
+                          <a href="dieu-khoan.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Điều khoản và dịch vụ chung</a>
+                        </div>
+                      </div>
+                      
+                </div>
+
+                <!-- Right Side Buttons -->
+                <div class="flex items-center space-x-4">
+                    <!-- CTA Button (Hidden on smallest screens) -->
+                    <a href="dang-ki.html" class="hidden sm:flex relative group">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
+                        <div class="relative px-5 sm:px-7 py-2 sm:py-3 bg-blue-950 rounded-lg leading-none flex items-center">
+                          <div class="flex items-center space-x-2">
+                            <span class="text-blue-200 group-hover:text-white transition duration-200">Đăng ký ngay</span>
+                            <svg class="w-5 h-5 text-blue-200 group-hover:text-white transform group-hover:translate-x-1 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </a>
+                      
+
+                    <!-- Mobile Menu Button -->
+                    <button @click="isOpen = !isOpen" class="md:hidden relative group" aria-label="Toggle mobile menu">
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
+                        <div class="relative p-2 bg-blue-950 rounded leading-none">
+                            <svg x-show="!isOpen" class="w-6 h-6 text-blue-200 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                            </svg>
+                            <svg x-show="isOpen" class="w-6 h-6 text-blue-200 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div x-show="isOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="relative mt-4 md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 bg-blue-900/50 backdrop-blur-sm rounded-lg border border-blue-500/10">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:text-white hover:bg-blue-800/50 transition-all duration-200">Trang chủ</a>
+                    <a href="tinh-toan.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:text-white hover:bg-blue-800/50 transition-all duration-200">Tính toán</a>
+                    <a href="tu-van.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:text-white hover:bg-blue-800/50 transition-all duration-200">Tư vấn</a>
+                    <div x-data="{ open: false }" class="relative group">
+                        <button @click="open = !open" class="flex items-center text-blue-100 group-hover:text-white transition-colors duration-300">
+                          More
+                          <svg class="ml-1 w-4 h-4 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false"
+                             x-transition
+                             class="absolute top-full mt-2 w-40 bg-blue-900 border border-blue-500/20 rounded-lg shadow-lg z-50">
+                          <a href="tai-lieu-nghien-cuu.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Tài liệu nghiên cứu</a>
+                          <a href="bao-mat.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Chính sách bảo mật</a>
+                          <a href="dieu-khoan.html" class="block px-4 py-2 text-sm text-white hover:bg-blue-800 transition">Điều khoản và dịch vụ chung</a>
+                        </div>
+                      </div>
+                    <!-- Mobile CTA Button -->
+                    <div class="px-3 py-2">
+                        <a href="dang-ki.html" class="hidden sm:flex relative group">
+                            <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-200"></div>
+                            <div class="relative px-5 sm:px-7 py-2 sm:py-3 bg-blue-950 rounded-lg leading-none flex items-center">
+                              <div class="flex items-center space-x-2">
+                                <span class="text-blue-200 group-hover:text-white transition duration-200">Đăng ký ngay</span>
+                                <svg class="w-5 h-5 text-blue-200 group-hover:text-white transform group-hover:translate-x-1 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                                </svg>
+                              </div>
+                            </div>
+                          </a>
+                          
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--Hero section-->
+    <section class="bg-white dark:bg-gray-900">
+      <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
+        
+        <!-- Cột trái (text) -->
+        <div class="mr-auto place-self-center lg:col-span-7">
+          <h1 class="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
+            SmartBites <br>chuyên gia dinh dưỡng của mọi nhà.
+          </h1>
+    
+          <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            Dinh dưỡng thông minh, sức khỏe tối ưu! Cùng chúng mình cải thiện chế độ ăn uống của bạn. SmartBites giúp phân tích chế độ ăn và gợi ý thực đơn lành mạnh.
+          </p>  
+        </div>
+    
+        <!-- Cột phải (logo) -->
+        <div class="lg:col-span-5 flex items-center justify-center">
+          <img src="logo.png" alt="hero image" class="w-full max-w-sm">
+        </div>
+        
+      </div>
+    </section>
+    
+    <!--Divder-->
+    <div class="h-2 bg-gradient-to-r from-blue-950 via-cyan-800 to-blue-950 my-4 rounded-xl shadow-inner"></div>
+    <!--Team section-->
+    <section class="lg:px-20 md:px-10 px-5 pt-1 pb-10">
+        <div class="mx-auto flex justify-center object-center px-4 py-2 sm:py-4 lg:max-w-7xl">
+          <div class="flex justify-center object-center flex-col">
+            <h2 class="text-4xl font-semibold tracking-tight text-blue-950 sm:text-5xl lg:text-6xl">
+              Thành viên dự án
+            </h2>
+            <div class="grid gap-5 gap-y-10 pt-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+              <!-- Thành viên 1 -->
+              <a href="#" class="group flex justify-center [perspective:1000px]">
+                <div class="flip-card relative lg:h-[400px] lg:w-64 md:h-[365px] md:64 sm:h-[365px] sm:w-60 h-[450px] w-[300px] rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] [transform-style:preserve-3d] transition-transform duration-500">
+                  <!-- Mặt trước -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl [backface-visibility:hidden]">
+                    <img
+                      class="object-cover cursor-pointer object-left h-full w-full rounded-xl"
+                      src="Dao Kiet.jpg"
+                      alt="Hong Dao Kiệt"
+                      width="250"
+                      height="250"
+                    />
+                  </div>
+                  <div class="absolute rounded-xl inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-blue/70"></div>
+                  <div class="absolute inset-0 translate-y-[78%] px-8 text-center">
+                    <p class="font-dmserif text-xl font-bold text-white">Hong Dao Kiệt</p>
+                  </div>
+                  <!-- Mặt sau -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-5 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div class="flex min-h-full flex-col items-center justify-center">
+                      <h2 class="text-xl font-bold mb-4">Leader</h2>
+                      <p class="text-lg text-pretty text-center mb-4">
+                       "Keep Goin', Don't Turn Back"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+      
+              <!-- Thành viên 2 -->
+              <a href="#" class="group flex justify-center [perspective:1000px]">
+                <div class="flip-card relative lg:h-[400px] lg:w-64 md:h-[365px] md:64 sm:h-[365px] sm:w-60 h-[450px] w-[300px] rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] [transform-style:preserve-3d] transition-transform duration-500">
+                  <!-- Mặt trước -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl [backface-visibility:hidden]">
+                    <img
+                      class="object-cover cursor-pointer object-left h-full w-full rounded-xl"
+                      src="Khang Truong.jpg"
+                      alt="Trương Trung Khang"
+                      width="250"
+                      height="250"
+                    />
+                  </div>
+                  <div class="absolute rounded-xl inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-blue/70"></div>
+                  <div class="absolute inset-0 translate-y-[78%] px-8 text-center">
+                    <p class="font-dmserif text-xl font-bold text-white">Trương Trung Khang</p>
+                  </div>
+      <!-- Mặt sau -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-5 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div class="flex min-h-full flex-col items-center justify-center">
+                      <h2 class="text-xl font-bold mb-4">Team UI</h2>
+                      <p class="text-lg text-pretty text-center mb-4">
+                       "No matter how hard is it,if you can overcome it,then you wil be success"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+      
+                 <!-- Thành viên 3 -->
+               <a href="#" class="group flex justify-center [perspective:1000px]">
+                <div class="flip-card relative lg:h-[400px] lg:w-64 md:h-[365px] md:64 sm:h-[365px] sm:w-60 h-[450px] w-[300px] rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] [transform-style:preserve-3d] transition-transform duration-500">
+                  <!-- Mặt trước -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl [backface-visibility:hidden]">
+                    <img
+                      class="object-cover cursor-pointer object-left h-full w-full rounded-xl"
+                      src="Nguyên Thảo.jpg"
+                      alt="Phạm Nguyên Thảo"
+                      width="250"
+                      height="250"
+                    />
+                  </div>
+                  <div class="absolute rounded-xl inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-blue/70"></div>
+                  <div class="absolute inset-0 translate-y-[78%] px-8 text-center">
+                    <p class="font-dmserif text-xl font-bold text-white">Phạm Nguyên Thảo</p>
+                  </div>
+      <!-- Mặt sau -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-5 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div class="flex min-h-full flex-col items-center justify-center">
+                      <h2 class="text-xl font-bold mb-4">Team Research</h2>
+                      <p class="text-lg text-pretty text-center mb-4">
+                        “I wanna be shaped by the love I give and the things I treasure.”
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+      
+              <!-- Thành viên 4 -->
+      <a href="#" class="group flex justify-center [perspective:1000px]">
+                <div class="flip-card relative lg:h-[400px] lg:w-64 md:h-[365px] md:64 sm:h-[365px] sm:w-60 h-[450px] w-[300px] rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] [transform-style:preserve-3d] transition-transform duration-500">
+                  <!-- Front Face -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl [backface-visibility:hidden]">
+                    <img
+                      class="object-cover cursor-pointer object-left h-full w-full rounded-xl"
+                      src="Đăng Huy.jpg"
+                      alt="Nguyễn Hữu Đăng Huy"
+                      width="250"
+                      height="250"
+                    />
+                  </div>
+                  <div class="absolute rounded-xl inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-blue/70"></div>
+                  <div class="absolute inset-0 translate-y-[78%] px-8 text-center">
+                    <p class="font-dmserif text-xl font-bold text-white">Nguyễn Hữu Đăng Huy</p>
+                  </div>
+      <!-- Back Face -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-5 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div class="flex min-h-full flex-col items-center justify-center">
+                      <h2 class="text-xl font-bold mb-4">Team Research</h2>
+                      <p class="text-lg text-pretty text-center mb-4">
+                        "Nguyễn Hữu Đăng Huy – trên sân thì chuyền bóng như có GPS, trong lớp thì xử lý bài như tiền vệ trung tâm xử lý tình huống. Học tập và đá banh – hai chiến trường, một tinh thần không bỏ cuộc!"
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+      
+              <!-- Thành viên 5 -->
+              <a href="#" class="group flex justify-center [perspective:1000px]">
+                <div class="flip-card relative lg:h-[400px] lg:w-64 md:h-[365px] md:64 sm:h-[365px] sm:w-60 h-[450px] w-[300px] rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] [transform-style:preserve-3d] transition-transform duration-500">
+                  <!-- Front Face -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl [backface-visibility:hidden]">
+                    <img
+                      class="object-cover cursor-pointer object-left h-full w-full rounded-xl"
+                      src="Tô Minh Quang.jpg"
+                      alt="Tô Minh Quang"
+                      width="250"
+                      height="250"
+                    />
+                  </div>
+                  <div class="absolute rounded-xl inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-blue/70"></div>
+                  <div class="absolute inset-0 translate-y-[78%] px-8 text-center">
+                    <p class="font-dmserif text-xl font-bold text-white">Tô Minh Quang</p>
+                  </div>
+      <!-- Back Face -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-5 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div class="flex min-h-full flex-col items-center justify-center">
+                      <h2 class="text-xl font-bold mb-4">Team code</h2>
+                      <p class="text-lg text-pretty text-center mb-4">
+                        "Engineer by craft, innovator by heart."
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <!-- Thành viên 6 -->
+              <a href="#" class="group flex justify-center [perspective:1000px]">
+                <div class="flip-card relative lg:h-[400px] lg:w-64 md:h-[365px] md:64 sm:h-[365px] sm:w-60 h-[450px] w-[300px] rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] [transform-style:preserve-3d] transition-transform duration-500">
+                  <!-- Front Face -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl [backface-visibility:hidden]">
+                    <img
+                      class="object-cover cursor-pointer object-left h-full w-full rounded-xl"
+                      src="Nguyễn Trần Đăng Quang.jpg"
+                      alt="Nguyễn Trần Đăng Quang"
+                      width="250"
+                      height="250"
+                    />
+                  </div>
+                  <div class="absolute rounded-xl inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-blue/70"></div>
+                  <div class="absolute inset-0 translate-y-[78%] px-8 text-center">
+                    <p class="font-dmserif text-xl font-bold text-white">Nguyễn Trần Đăng Quang</p>
+                  </div>
+      <!-- Back Face -->
+                  <div class="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-5 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                    <div class="flex min-h-full flex-col items-center justify-center">
+                      <h2 class="text-xl font-bold mb-4">Team code</h2>
+                      <p class="text-lg text-pretty text-center mb-4">
+                       Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi iste odit beatae!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="h-2 bg-gradient-to-r from-blue-950 via-cyan-800 to-blue-950 my-4 rounded-xl shadow-inner"></div>
+    <!--Thực trạng-->
+    <div class="relative overflow-hidden bg-white pt-16 pb-32 space-y-24 text-gray-800">
+        <div class="text-center px-4">
+            <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-blue-950 mb-12">
+              Thực trạng
+            </h2>
+          </div>          
+        <div class="relative">
+            <div class="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-2 lg:gap-24 lg:px-8 ">
+                <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 ">
+    
+                    <div>
+                        <div>
+                            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" aria-hidden="true"
+                                    class="h-8 w-8 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </div>
+    
+                        <div class="mt-6">
+                            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+                                Thực trạng dinh dưỡng ở Việt Nam
+                            </h2>
+                            <p class="mt-4 text-lg text-gray-700">
+                              - Việt Nam đã đạt được những thành tựu đáng kể về cải thiện tình trạng dinh dưỡng cho người dân, song vẫn phải đối mặt với 3 gánh nặng về dinh dưỡng: tình trạng suy dinh dưỡng đồng thời cùng tồn tại với thiếu vi chất dinh dưỡng và thừa cân béo phì.<br>
+                              - Nguyên nhân dẫn đến thực trạng trên là do chế độ dinh dưỡng của người dân còn chưa hợp lý (tiêu thụ nhiều thịt, ăn ít rau quả…) và thiếu hoạt động thể lực.<br>
+                              <b>Số liệu</b> <br>
+                              - Tổ chức Y tế Thế giới báo cáo rằng <b><i>25% phụ nữ và 20% nam giới trưởng thành</i></b> ở Việt Nam bị thừa cân béo phì (WHO, 2018).
+                              - Tỷ lệ thừa cân, béo phì ở trẻ em tuổi học đường (5 - 19 tuổi) tăng từ <b><i>8,5% năm 2010 lên 19,0% năm 2020</i></b>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 sm:mt-16 lg:mt-0">
+                    <div class="-mr-48 pl-6 md:-mr-16 lg:relative lg:m-0 lg:h-full lg:px-0">
+                        <img loading="lazy" width="647" height="486"
+                            class="w-full rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                            style="color:transparent" src="https://vov2.vov.vn/sites/default/files/styles/large/public/2021-04/dinh-duong.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+        <div class="relative">
+            <div class="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-2 lg:gap-24 lg:px-8 ">
+                <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 lg:col-start-2">
+                    <div>
+                        <div>
+                            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" aria-hidden="true"
+                                    class="h-8 w-8 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="mt-6">
+                            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+                               Thực trạng dinh dưỡng trên thế giới
+                            </h2>
+                            <p class="mt-4 text-lg text-gray-700">
+                              - Tỉ lệ người bị suy dinh dưỡng, thừa cân và béo phì ngày càng gia tăng, ảnh hưởng đến đời sống người dân.<br>
+                              - Theo thông tin mới nhất từ Tổ chức Y tế thế giới (WHO), hơn một nửa số người lớn, <b><i>1/3 thanh thiếu niên và trẻ em</i></b> trên toàn thế giới sẽ bị thừa cân hoặc béo phì vào năm 2050.<br> 
+                              - Theo một báo cáo của Liên Hợp Quốc, trong năm 2024, số người bị suy dinh dưỡng trên toàn cầu đã <b><i>tăng thêm 152 triệu người so với năm 2019</b></i>, đạt khoảng 733 triệu người, tương đương khoảng <b><i>9% dân số thế giới</i></b>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 sm:mt-16 lg:mt-0">
+                    <div class="-ml-48 pr-6 md:-ml-16 lg:relative lg:m-0 lg:h-full lg:px-0">
+                        <img alt="Inbox user interface" loading="lazy" width="647" height="486"
+                            class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
+                            style="color:transparent" src="stats.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+        <div class="relative">
+            <div class="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-2 lg:gap-24 lg:px-8 ">
+                <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 ">
+                    <div>
+                        <div>
+                            <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" aria-hidden="true"
+                                    class="h-8 w-8 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="mt-6">
+                            <h2 class="text-3xl font-bold tracking-tight text-gray-900">
+                                Mục tiêu cải thiện thực trạng dinh dưỡng trong tương lai
+                            </h2>
+                            <p class="mt-4 text-lg text-gray-700">
+                              Mục tiêu phát triển bền vững về dinh dưỡng trên thế giới: Liên Hợp Quốc cảnh báo rằng mục tiêu xóa bỏ nạn đói vào năm 2030 đang đi chệch hướng, đòi hỏi các quốc gia tăng cường nỗ lực để cải thiện tình trạng dinh dưỡng và an ninh lương thực.
+                              Mục tiêu khắc phục thực trạng lâu dài Việt Nam: Chiến lược quốc gia về dinh dưỡng của Việt Nam đặt mục tiêu giảm tỷ lệ suy dinh dưỡng thấp còi ở trẻ em dưới 5 tuổi <b><i>xuống dưới 15% vào năm 2030</i></b>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 sm:mt-16 lg:mt-0">
+                    <div class="-mr-48 pl-6 md:-mr-16 lg:relative lg:m-0 lg:h-full lg:px-0">
+                        <img loading="lazy" width="646" height="485"
+                            class="w-full rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                            style="color:transparent"
+                            src="stats2.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="h-2 bg-gradient-to-r from-blue-950 via-cyan-800 to-blue-950 my-4 rounded-xl shadow-inner"></div>
+    <!--Người nổi tiếng nói gì về môi trường-->
+    <section id="testimonials" aria-label="What our customers are saying" class="bg-slate-50 py-20 sm:py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-2xl md:text-center">
+            <h2 class="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
+              Người dùng nói gì về ứng dụng ? </h2>
+          </div>
+          <ul role="list"
+            class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:gap-8 lg:mt-20 lg:max-w-none lg:grid-cols-3">
+            <li>
+              <ul role="list" class="flex flex-col gap-y-6 sm:gap-y-8">
+                <li>
+                  <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10"><svg aria-hidden="true"
+                      width="105" height="78" class="absolute left-6 top-6 fill-slate-100">
+                      <path
+                        d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z">
+                      </path>
+                    </svg>
+                    <blockquote class="relative">
+                      <p class="text-lg tracking-tight text-slate-900">Tôi khá thích giao diện trang web, dễ dàng thao tác cũng như sử dụng các chức năng. Tuyệt vời !</p>
+                    </blockquote>
+                    <figcaption class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                      <div>
+                        <div class="font-display text-base text-slate-900">USER.001</div>
+                      </div>
+                      <div class="overflow-hidden rounded-full bg-slate-50">
+                        <img alt="" class="h-14 w-14 object-cover" style="color:transparent" src="https://randomuser.me/api/portraits/men/15.jpg">
+                      </div>
+                    </figcaption>
+                  </figure>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul role="list" class="flex flex-col gap-y-6 sm:gap-y-8">
+                <li>
+                  <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10"><svg aria-hidden="true"
+                      width="105" height="78" class="absolute left-6 top-6 fill-slate-100">
+                      <path
+                        d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z">
+                      </path>
+                    </svg>
+                    <blockquote class="relative">
+                      <p class="text-lg tracking-tight text-slate-900">Ban đầu tôi nghĩ ứng dụng sẽ không hoạt động chuẩn xác trong thực tế , nhưng kết quả lại trái ngược với suy nghĩ của tôi. Rất hay !</p>
+                    </blockquote>
+                    <figcaption class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                      <div>
+                        <div class="font-display text-base text-slate-900">USER.002</div>
+                      </div>
+                      <div class="overflow-hidden rounded-full bg-slate-50">
+                        <img alt="" class="h-14 w-14 object-cover" style="color:transparent" src="https://randomuser.me/api/portraits/women/15.jpg">
+                      </div>
+                    </figcaption>
+                  </figure>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <ul role="list" class="flex flex-col gap-y-6 sm:gap-y-8">
+                <li>
+                  <figure class="relative rounded-2xl bg-white p-6 shadow-xl shadow-slate-900/10"><svg aria-hidden="true"
+                      width="105" height="78" class="absolute left-6 top-6 fill-slate-100">
+                      <path
+                        d="M25.086 77.292c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622C1.054 58.534 0 53.411 0 47.686c0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C28.325 3.917 33.599 1.507 39.324 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Zm54.24 0c-4.821 0-9.115-1.205-12.882-3.616-3.767-2.561-6.78-6.102-9.04-10.622-2.11-4.52-3.164-9.643-3.164-15.368 0-5.273.904-10.396 2.712-15.368 1.959-4.972 4.746-9.567 8.362-13.786a59.042 59.042 0 0 1 12.43-11.3C82.565 3.917 87.839 1.507 93.564 0l11.074 13.786c-6.479 2.561-11.677 5.951-15.594 10.17-3.767 4.219-5.65 7.835-5.65 10.848 0 1.356.377 2.863 1.13 4.52.904 1.507 2.637 3.089 5.198 4.746 3.767 2.41 6.328 4.972 7.684 7.684 1.507 2.561 2.26 5.5 2.26 8.814 0 5.123-1.959 9.19-5.876 12.204-3.767 3.013-8.588 4.52-14.464 4.52Z">
+                      </path>
+                    </svg>
+                    <blockquote class="relative">
+                      <p class="text-lg tracking-tight text-slate-900">Ứng dụng rất hay nhưng nên cải tiến thêm nhiều chức năng để thu hút nhiều người dùng hơn nhé !.</p>
+                    </blockquote>
+                    <figcaption class="relative mt-6 flex items-center justify-between border-t border-slate-100 pt-6">
+                      <div>
+                        <div class="font-display text-base text-slate-900">USER.003</div>
+                      </div>
+                      <div class="overflow-hidden rounded-full bg-slate-50">
+                        <img alt="" class="h-14 w-14 object-cover" style="color:transparent" src="https://randomuser.me/api/portraits/men/10.jpg">
+                      </div>
+                    </figcaption>
+                  </figure>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="h-2 bg-gradient-to-r from-blue-950 via-cyan-800 to-blue-950 my-4 rounded-xl shadow-inner"></div>
+    <!--Lời nói cảnh tỉnh or Khuyến khích sử dụng app-->
+<div class="flex flex-col items-center text-center gap-4">
+    <h2 class="text-2xl font-extrabold dark:text-white">Hãy cùng chung tay nâng cao sức khỏe & lối sống cùng SmartBites !</h2>
+    <a href="dang-ki.html" class="bg-indigo-600 hover:bg-indigo-700 text-white text-lg sm:text-xl px-6 py-3 rounded-xl transition font-semibold shadow-md">
+      Đăng ký ngay !
+    </a>
+    
+  </div>
+  <!--Footer-->
+  <footer class="bg-white shadow-lg mt-auto">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Giới thiệu dự án -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">SmartBites</h3>
+            <p class="text-gray-500 mt-3">Sức khỏe & Dinh dưỡng của người dùng là trách nhiệm hàng đầu của chúng tôi.</p>
+            <p class="text-gray-500 mt-2">© 2024 All rights reserved.</p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">Phím tắt</h3>
+            <ul class="mt-3 space-y-2">
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Trang chủ</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Cửa hàng</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Về chúng tôi</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Liên hệ</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Customer Service -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">CSKH</h3>
+            <ul class="mt-3 space-y-2">
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">FAQs</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Mua sắm</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Chính sách bảo mật</a></li>
+                <li><a href="#" class="text-gray-500 hover:text-indigo-600 transition">Điều khoản & Dịch vụ chung</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 4: Newsletter Subscription -->
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800">Cập nhật</h3>
+            <p class="text-gray-500 mt-3">Đăng ký email của bạn để cập nhật thông tin sớm nhất về dinh dưỡng từ chúng tôi.</p>
+            <div class="mt-4 flex">
+                <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-1">
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-r-lg transition">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+  const cards = document.querySelectorAll('.flip-card');
+
+  cards.forEach(card => {
+    card.addEventListener('click', function (e) {
+      e.preventDefault(); // ✅ Ngăn thẻ <a> cuộn về đầu trang
+      e.stopPropagation(); // ✅ Ngăn lan sự kiện
+
+      // Lật card hiện tại, bỏ lật các card khác
+      cards.forEach(c => {
+        if (c !== card) c.classList.remove('flipped');
+      });
+
+      card.classList.toggle('flipped');
+    });
+  });
+
+  // Bấm ra ngoài thì gỡ lật tất cả
+  document.addEventListener('click', function () {
+    cards.forEach(c => c.classList.remove('flipped'));
+  });
+});
+
+  </script>
+</body>
+</html>
